@@ -12,7 +12,9 @@ class PostController extends Controller
     //
 
     public function index(){
-        return Post::paginate(25);
+        return view('blog.index' , [
+            "posts" => Post::paginate(2)
+        ]);
     }
 
     public function show(string $title, string $id){
@@ -20,7 +22,9 @@ class PostController extends Controller
         if($post->title !== $title){
             return to_route('blog.show', ['title' => $post->title, "id" => $post->id]);
         }
-        return $post;
+        return view('blog.show', [
+            "post" => $post
+        ]);
     }
 
 }
