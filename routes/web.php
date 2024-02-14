@@ -25,7 +25,14 @@ Route::prefix('/blog')->name('blog.')->controller(PostController::class)->group(
 
     Route::get('/', 'index')->name('index');
     
+
+    Route::get('/{post}/edit', 'edit')->name('edit');
+    Route::patch('/{post}/edit', 'update');
     
     Route::get('/{title}/{post}', 'show')->name('show');
+
+
+    Route::get('/new', 'create')->name('create');
+    Route::post('/new', 'store');
 
 });
