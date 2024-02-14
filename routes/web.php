@@ -26,6 +26,6 @@ Route::prefix('/blog')->name('blog.')->controller(PostController::class)->group(
     Route::get('/', 'index')->name('index');
     
     
-    Route::get('/{title}/{id}', 'show')->name('show');
+    Route::get('/{title}/{post}', 'show')->name('show');
 
 });

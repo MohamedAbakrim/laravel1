@@ -18,15 +18,15 @@ class PostController extends Controller
     public function index(BlogFilterRequest $request){
 
         // dd($validate->errors());
-        dd($request->validated());
+        // dd($request->validated());
         
         return view('blog.index' , [
             "posts" => Post::paginate(2)
         ]);
     }
 
-    public function show(string $title, string $id){
-        $post = Post::findOrFail($id);
+    public function show(string $title, Post $post){
+
         if($post->title !== $title){
             return to_route('blog.show', ['title' => $post->title, "id" => $post->id]);
         }

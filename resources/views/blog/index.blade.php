@@ -14,7 +14,7 @@
                 {{$post->content}}
             </p>
             <p>
-                <a href="{{route('blog.show', ['title'=> $post->title, 'id'=> $post->id])}}" class="btn btn-primary">Read more</a>
+                <a href="{{route('blog.show', ['title'=> $post->title, 'post'=> $post->id])}}" class="btn btn-primary">Read more</a>
             </p>
         </article>
     @endforeach

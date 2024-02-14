@@ -29,5 +29,4 @@ class BlogFilterRequest extends FormRequest
             // "content" => "required|max:3"
         ];
     }
-
 }
