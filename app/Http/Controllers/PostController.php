@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 // use App\Http\Requests\BlogFilterRequest;
 use App\Http\Requests\PostFormRequest;
 use App\Models\Post;
+use App\Models\Category;
 // use Illuminate\Validation\Rule;
 
 
@@ -22,9 +23,35 @@ class PostController extends Controller
         // BlogFilterRequest $request;
         // dd($validate->errors());
         // dd($request->validated());
+
+        // $posts = Post::all();
+
+        // $posts = Post::with('category')->get();
+        // foreach($posts as $post){
+        //     $post->category->name;
+        // }
+
+
+        // $category = Category::find(1);
+
+
+
+        // $post = Post::find(2);
+        // $post->tags()->createMany([
+        //     ['name' => 'Tag 1'],
+        //     ['name' => 'Tag 2']
+        // ]);
+        // dd($post->tags);
+
+
+        // $post->category()->associate($category);
+        // $post->save();
+        // dd($category->posts);
+        // $category->posts()->where('id', '>', '1')->get();
+        
         
         return view('blog.index' , [
-            "posts" => Post::paginate(2)
+            "posts" => Post::with('tags', 'category')->paginate(10)
         ]);
     }
 
