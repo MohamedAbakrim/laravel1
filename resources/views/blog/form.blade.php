@@ -19,7 +19,44 @@
                 {{$message}}
             </div>
         @enderror
-        
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <div class="mb-3">
+        <label for="category" class="form-label">Category:</label>
+        <select class="form-control" id="category" name="category_id">
+            <option value="">Select a category</option>
+            @foreach($categories as $category)
+                <option @selected(old('category_id', $post->category_id) === $category->id) value="{{$category->id}}">{{$category->name}}</option>
+            @endforeach
+        </select>
+        
+        @error('category_id')
+            <div class="alert alert-danger">
+                {{$message}}
+            </div>
+        @enderror
+    </div>
+    @php
+        $tagsIds = $post->tags()->pluck('id');
+    @endphp
+    <div class="mb-3">
+        <label for="tag" class="form-label">Tags :</label>
+        <select class="form-control" id="tag" name="tags[]" multiple>
+            @foreach($tags as $tag)
+                <option @selected($tagsIds->contains($tag->id)) value="{{$tag->id}}">{{$tag->name}}</option>
+            @endforeach
+        </select>
+        
+        @error('tags')
+            <div class="alert alert-danger">
+                {{$message}}
+            </div>
+        @enderror
+    </div>
+    <button type="submit" class="btn btn-primary">
+        @if($post->id)
+            Edit
+        @else
+            Add
+        @endif
+    </button>
 </form>
