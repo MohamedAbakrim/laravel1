@@ -4,6 +4,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,8 +18,12 @@ use App\Http\Controllers\PostController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('blog.index');
 });
+
+Route::get('/login', [AuthController::class, 'login'])->name('auth.login');
+Route::delete('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+Route::post('/login', [AuthController::class, 'doLogin']);
 
 
 Route::prefix('/blog')->name('blog.')->controller(PostController::class)->group(function(){
@@ -26,13 +31,13 @@ Route::prefix('/blog')->name('blog.')->controller(PostController::class)->group(
     Route::get('/', 'index')->name('index');
     
 
-    Route::get('/{post}/edit', 'edit')->name('edit');
-    Route::patch('/{post}/edit', 'update');
+    Route::get('/{post}/edit', 'edit')->name('edit')->middleware('auth');
+    Route::patch('/{post}/edit', 'update')->middleware('auth');
     
     Route::get('/{title}/{post}', 'show')->name('show');
 
 
-    Route::get('/new', 'create')->name('create');
-    Route::post('/new', 'store');
+    Route::get('/new', 'create')->name('create')->middleware('auth');
+    Route::post('/new', 'store')->middleware('auth');
 
 });

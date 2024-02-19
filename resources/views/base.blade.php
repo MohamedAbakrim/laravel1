@@ -25,6 +25,21 @@
                         <a class="nav-link" href="javascript:void(0)">Link</a>
                     </li>
                 </ul>
+                <div class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    @auth   
+                        <strong class="text-white">{{\Illuminate\Support\Facades\Auth::user()->name}}</strong>
+                        <form action="{{route('auth.logout')}}" method="POST" class="nav-item">
+                            @method("delete")
+                            @csrf
+                            <button class="btn btn-primary">Logout</button>
+                        </form>
+                    @endauth
+                    @guest
+                        <div class="nav-item">
+                            <a href="{{route('auth.login')}}" class="nav-link btn btn-primary">Log In</a>
+                        </div>
+                    @endguest
+                </div>
             </div>
         </div>
     </nav>

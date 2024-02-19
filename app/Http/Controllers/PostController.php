@@ -9,6 +9,8 @@ use App\Http\Requests\PostFormRequest;
 use App\Models\Post;
 use App\Models\Category;
 use App\Models\Tag;
+// use App\Models\User;
+// use Illuminate\Support\Facades\Hash;
 // use Illuminate\Validation\Rule;
 
 
@@ -49,6 +51,13 @@ class PostController extends Controller
         // $post->save();
         // dd($category->posts);
         // $category->posts()->where('id', '>', '1')->get();
+
+
+        // User::create([
+        //     "name" => "CmdPy",
+        //     "email" => "mohammedabakrim@gmail.com",
+        //     "password" => Hash::make('typingclub')
+        // ]);
         
         
         return view('blog.index' , [
