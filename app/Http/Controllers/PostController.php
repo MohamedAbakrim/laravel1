@@ -9,6 +9,7 @@ use App\Http\Requests\PostFormRequest;
 use App\Models\Post;
 use App\Models\Category;
 use App\Models\Tag;
+use Illuminate\Support\Facades\Storage;
 // use App\Models\User;
 // use Illuminate\Support\Facades\Hash;
 // use Illuminate\Validation\Rule;
@@ -89,7 +90,7 @@ class PostController extends Controller
 
     public function store(PostFormRequest $request){
 
-        $post = Post::create($request->validated());
+        $post = Post::create($this->extractData($request, new Post()));
         $post->tags()->sync($request->validated("tags"));
         return redirect()->route('blog.show', ["title" => $post->title, "post"=> $post->id])->with('done', "the post has been saved successfully");
     }
@@ -102,10 +103,23 @@ class PostController extends Controller
         ]);
     }
 
+    private function extractData(PostFormRequest $request, Post $post){
 
+        $data = $request->validated();
+        $image = $request->validated('image');
+        if($image === null || $image->getError()){
+            return $data;
+        }
+        if($post->image){
+            Storage::disk('public')->delete($post->image);
+        }
+        $data['image'] = $image->store('blog', 'public');
+        return $data;
+    }
 
     public function update(PostFormRequest $request, Post $post){
-        $post->update($request->validated());
+
+        $post->update($this->extractData($request, $post));
         $post->tags()->sync($request->validated("tags"));
         return redirect()->route('blog.show', ["title" => $post->title, "post"=> $post->id])->with('done', "the post has been updated successfully");
     }

@@ -8,7 +8,7 @@
 
 
     @forelse($posts as $post)
-        <article>
+        <article class="border rounded p-3 bg-light">
             <h3>{{$post->title}}</h3>
             <p class="small">
                 @if($post->category)
@@ -22,7 +22,7 @@
                     @endforeach
                 @endif
             </p>
-
+            <img style="width:100%;height:200px;object-fit:cover" src="{{$post->imageUrl()}}" alt="image"/>
             <p>
                 {{$post->content}}
             </p>

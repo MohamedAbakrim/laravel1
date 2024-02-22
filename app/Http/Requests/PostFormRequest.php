@@ -30,7 +30,8 @@ class PostFormRequest extends FormRequest
             "content" => ["required"],
             "slug" => ["required", Rule::unique('posts')->ignore($this->route()->parameter('post'))],
             "category_id" => ["required", "exists:categories,id"],
-            "tags" => ["required", "array", "exists:tags,id"]
+            "tags" => ["required", "array", "exists:tags,id"],
+            "image" => ["image", "max:2000"]
         ];
     }
 

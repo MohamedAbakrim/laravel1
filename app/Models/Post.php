@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Category;
 use App\Models\Tag;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @mixin IdeHelperPost
@@ -19,6 +20,7 @@ class Post extends Model
         "slug",
         "content",
         "category_id",
+        "image"
     ];
 
 
@@ -29,5 +31,9 @@ class Post extends Model
 
     public function tags(){
         return $this->belongsToMany(Tag::class);
+    }
+
+    public function imageUrl(){
+        return Storage::disk('local')->url($this->image);
     }
 }
